@@ -1,5 +1,23 @@
+/* ===================================================
+   SKILL TREE VIEW — CYBER-NATURE THEME
+   =================================================== */
+
 .back-btn {
-  margin-bottom: 20px;
+  margin-bottom: 24px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: var(--text-secondary);
+  padding: 10px 20px;
+  border-radius: 12px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.back-btn:hover {
+  background: rgba(0, 255, 170, 0.06);
+  border-color: rgba(0, 255, 170, 0.2);
+  color: #00ffaa;
 }
 
 .skill-tree-container {
@@ -8,42 +26,63 @@
 
 .skill-nodes {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-  gap: 25px;
+  grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+  gap: 24px;
 }
 
 .skill-node {
-  background-color: var(--card-bg);
-  border-radius: 12px;
-  padding: 25px;
-  border: 3px solid;
-  transition: all 0.3s;
+  background: var(--card-bg);
+  backdrop-filter: blur(12px);
+  border-radius: 20px;
+  padding: 28px;
+  border: 2px solid rgba(255, 255, 255, 0.06);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
+  overflow: hidden;
+}
+
+.skill-node::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
 }
 
 .skill-node:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  transform: translateY(-6px);
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.3);
+  border-color: rgba(255, 255, 255, 0.1);
 }
 
 .skill-node.locked {
-  opacity: 0.6;
+  opacity: 0.5;
+  filter: grayscale(0.3);
+}
+
+.skill-node.locked:hover {
+  transform: none;
+  box-shadow: none;
 }
 
 .node-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 15px;
+  margin-bottom: 16px;
 }
 
 .node-level {
-  background-color: rgba(52, 152, 219, 0.2);
-  color: var(--secondary-color);
-  padding: 5px 12px;
+  background: rgba(0, 255, 170, 0.1);
+  color: #00ffaa;
+  padding: 5px 14px;
   border-radius: 20px;
-  font-size: 12px;
-  font-weight: 600;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  border: 1px solid rgba(0, 255, 170, 0.15);
 }
 
 .node-status-icon {
@@ -54,98 +93,110 @@
   color: var(--text-primary);
   margin-bottom: 12px;
   font-size: 20px;
+  font-weight: 700;
 }
 
 .node-description {
   color: var(--text-secondary);
-  margin-bottom: 15px;
+  margin-bottom: 16px;
   font-size: 14px;
-  line-height: 1.5;
+  line-height: 1.6;
 }
 
 .node-requirements {
-  background-color: rgba(52, 152, 219, 0.1);
-  padding: 12px;
-  border-radius: 8px;
-  margin-bottom: 15px;
-  border-left: 3px solid var(--secondary-color);
+  background: rgba(0, 255, 170, 0.04);
+  padding: 14px 16px;
+  border-radius: 12px;
+  margin-bottom: 16px;
+  border-left: 3px solid rgba(0, 255, 170, 0.4);
 }
 
 .node-requirements strong {
-  color: var(--secondary-color);
+  color: #00ffaa;
   display: block;
-  margin-bottom: 5px;
+  margin-bottom: 6px;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
 .node-requirements p {
   color: var(--text-secondary);
-  font-size: 14px;
+  font-size: 13px;
   margin: 0;
+  line-height: 1.5;
 }
 
 .node-points {
-  background-color: rgba(241, 196, 15, 0.2);
+  background: rgba(241, 196, 15, 0.08);
   color: #f1c40f;
-  padding: 8px 12px;
-  border-radius: 5px;
+  padding: 10px 14px;
+  border-radius: 10px;
   text-align: center;
-  margin-bottom: 15px;
-  font-weight: 600;
+  margin-bottom: 16px;
+  font-weight: 700;
+  font-size: 14px;
+  border: 1px solid rgba(241, 196, 15, 0.15);
 }
 
 .node-actions {
   display: flex;
   gap: 10px;
-  margin-top: 15px;
+  margin-top: 16px;
 }
 
 .node-actions .btn {
   flex: 1;
-  padding: 10px;
+  padding: 12px;
   font-size: 14px;
+  border-radius: 12px;
 }
 
 .completed-badge {
-  background: linear-gradient(135deg, #2ecc71, #27ae60);
-  color: white;
-  padding: 10px;
-  border-radius: 5px;
+  background: linear-gradient(135deg, rgba(46, 204, 113, 0.15), rgba(39, 174, 96, 0.1));
+  color: #2ecc71;
+  padding: 12px;
+  border-radius: 12px;
   text-align: center;
-  font-weight: 600;
+  font-weight: 700;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
+  border: 1px solid rgba(46, 204, 113, 0.2);
+  font-size: 14px;
 }
 
 .review-notes {
-  background-color: rgba(46, 204, 113, 0.1);
-  border-left: 3px solid var(--success-color);
-  padding: 12px;
-  border-radius: 5px;
-  margin-top: 15px;
+  background: rgba(46, 204, 113, 0.05);
+  border-left: 3px solid rgba(46, 204, 113, 0.4);
+  padding: 14px 16px;
+  border-radius: 12px;
+  margin-top: 16px;
 }
 
 .review-notes strong {
-  color: var(--success-color);
+  color: #2ecc71;
   display: block;
-  margin-bottom: 5px;
+  margin-bottom: 6px;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
 .review-notes p {
   color: var(--text-secondary);
   font-size: 14px;
   margin: 0;
+  line-height: 1.5;
 }
 
 /* Modal Styles */
 .modal-overlay {
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.8);
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(8px);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -154,30 +205,34 @@
 }
 
 .modal-content {
-  background-color: var(--card-bg);
-  border-radius: 12px;
-  padding: 30px;
+  background: rgba(13, 25, 45, 0.95);
+  backdrop-filter: blur(20px);
+  border-radius: 24px;
+  padding: 36px;
   max-width: 600px;
   width: 100%;
   max-height: 90vh;
   overflow-y: auto;
-  border: 2px solid var(--border-color);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 32px 80px rgba(0, 0, 0, 0.5);
 }
 
 .modal-content h2 {
   color: var(--text-primary);
-  margin-bottom: 25px;
+  margin-bottom: 24px;
+  font-size: 24px;
 }
 
 .modal-actions {
   display: flex;
-  gap: 15px;
-  margin-top: 25px;
+  gap: 12px;
+  margin-top: 24px;
 }
 
 .modal-actions .btn {
   flex: 1;
-  padding: 12px;
+  padding: 14px;
+  border-radius: 12px;
 }
 
 @media (max-width: 768px) {
@@ -190,7 +245,6 @@
   }
 
   .modal-content {
-    padding: 20px;
+    padding: 24px;
   }
 }
-

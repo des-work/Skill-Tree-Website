@@ -1,102 +1,251 @@
+/* ===================================================
+   NAVBAR — TREE CANOPY/CROWN
+   The navbar IS the top of the tree with branches & leaves
+   =================================================== */
+
 .navbar {
-  background-color: var(--card-bg);
-  border-bottom: 2px solid var(--border-color);
-  padding: 15px 0;
+  background: rgba(6, 10, 16, 0.95);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  padding: 0;
   position: sticky;
   top: 0;
   z-index: 100;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  border-bottom: 2px solid rgba(0,255,170,0.12);
+  box-shadow: 0 4px 30px rgba(0,0,0,0.3);
+  margin-top: 0; /* Remove extra space since canopy is now in background */
 }
 
+/* ===== TREE CROWN — Small accent branches above navbar ===== */
+.tree-crown {
+  position: absolute;
+  top: -30px;
+  left: 0;
+  right: 0;
+  height: 30px;
+  pointer-events: none;
+  z-index: 101;
+}
+
+/* SVG crown for subtle branch accent */
+.crown-svg {
+  width: 100%;
+  height: 100%;
+  filter: drop-shadow(0 0 8px rgba(0,255,170,0.15));
+}
+
+/* Leaf clusters scattered throughout crown */
+.crown-leaf-cluster {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  bottom: 5px;
+}
+
+.cl-left-1 { left: 40%; bottom: 12px; }
+.cl-right-1 { right: 40%; bottom: 12px; }
+
+/* Each cluster has 3 hexagonal leaves */
+.crown-leaf-cluster::before,
+.crown-leaf-cluster::after,
+.crown-leaf-cluster > span {
+  content: '';
+  position: absolute;
+  width: 7px;
+  height: 10px;
+  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+  background: rgba(0,255,170,0.4);
+  animation: leafPulse 4s ease-in-out infinite;
+  box-shadow: 0 0 4px rgba(0,255,170,0.3);
+}
+
+.crown-leaf-cluster::before { 
+  left: 0; top: 0; 
+}
+.crown-leaf-cluster::after { 
+  left: 8px; top: 5px; 
+  animation-delay: 0.5s; 
+}
+.crown-leaf-cluster > span { 
+  left: 4px; top: -4px; 
+  animation-delay: 1s; 
+  display: block;
+}
+
+@keyframes leafPulse {
+  0%, 100% { 
+    opacity: 0.6; 
+    transform: scale(1);
+    filter: brightness(1); 
+  }
+  50% { 
+    opacity: 1; 
+    transform: scale(1.1);
+    filter: brightness(1.4) drop-shadow(0 0 6px rgba(0,255,170,0.5)); 
+  }
+}
+
+/* Trunk extending down from navbar into page */
+.tree-from-nav {
+  position: absolute;
+  left: 50%;
+  bottom: -30px;
+  width: 6px;
+  height: 30px;
+  transform: translateX(-50%);
+  background: linear-gradient(180deg, rgba(0,255,170,0.2), rgba(0,255,170,0.35));
+  border-radius: 0 0 3px 3px;
+  pointer-events: none;
+  z-index: 101;
+  box-shadow: 0 0 10px rgba(0,255,170,0.15);
+}
+
+.tree-from-nav::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -4px;
+  right: -4px;
+  height: 2px;
+  background: rgba(0,255,170,0.25);
+  border-radius: 50%;
+  box-shadow: 0 0 6px rgba(0,255,170,0.3);
+}
+
+/* Navbar content */
 .navbar-container {
-  max-width: 1400px;
+  max-width: 1200px;
   margin: 0 auto;
-  padding: 0 20px;
+  padding: 0 24px;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  height: 64px;
+  position: relative;
+  z-index: 2;
+  background: linear-gradient(180deg, rgba(0,255,170,0.02), transparent);
 }
 
+/* Brand — Tree logo */
 .navbar-brand {
-  font-size: 24px;
-  font-weight: bold;
+  font-size: 18px;
+  font-weight: 700;
   color: var(--text-primary);
   text-decoration: none;
   display: flex;
   align-items: center;
   gap: 10px;
+  transition: all 0.3s;
+  letter-spacing: 0.5px;
 }
-
 .navbar-brand:hover {
   text-decoration: none;
-  color: var(--secondary-color);
+  color: #00ffaa;
+}
+.brand-tree-icon {
+  font-size: 26px;
+  color: #00ffaa;
+  filter: drop-shadow(0 0 10px rgba(0,255,170,0.5));
+  animation: treeIconPulse 3s ease-in-out infinite;
+}
+@keyframes treeIconPulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.08); filter: drop-shadow(0 0 16px rgba(0,255,170,0.7)); }
+}
+.brand-text {
+  display: flex;
+  gap: 0;
+}
+.brand-accent {
+  color: #00ffaa;
 }
 
+/* Links */
 .navbar-links {
   display: flex;
-  gap: 20px;
+  gap: 4px;
   align-items: center;
 }
-
 .nav-link {
-  color: var(--text-secondary);
+  color: #6a8a7a;
   text-decoration: none;
-  padding: 8px 16px;
-  border-radius: 5px;
+  padding: 8px 14px;
+  border-radius: 10px;
   transition: all 0.3s;
   display: flex;
   align-items: center;
-  gap: 5px;
+  gap: 8px;
   background: none;
   border: none;
-  font-size: 16px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  position: relative;
 }
-
 .nav-link:hover {
-  background-color: rgba(52, 152, 219, 0.1);
-  color: var(--secondary-color);
+  background: rgba(0,255,170,0.08);
+  color: #00ffaa;
   text-decoration: none;
+  box-shadow: 0 0 12px rgba(0,255,170,0.1);
 }
-
-.logout-btn {
-  color: var(--danger-color);
-}
-
+.logout-btn { color: rgba(231,76,60,0.7); }
 .logout-btn:hover {
-  background-color: rgba(231, 76, 60, 0.1);
-  color: var(--danger-color);
+  background: rgba(231,76,60,0.08);
+  color: #e74c3c;
+  box-shadow: 0 0 12px rgba(231,76,60,0.1);
 }
 
+/* User badge */
 .navbar-user {
   display: flex;
-  flex-direction: column;
-  align-items: flex-end;
+  align-items: center;
+  gap: 12px;
+  padding: 6px 14px;
+  border-radius: 12px;
+  background: rgba(0,255,170,0.04);
+  border: 1px solid rgba(0,255,170,0.1);
 }
-
 .user-name {
   font-weight: 600;
-  color: var(--text-primary);
+  font-size: 13px;
+  color: #c0d0c8;
 }
-
 .user-role {
-  font-size: 12px;
-  color: var(--text-secondary);
+  font-size: 10px;
+  color: #00ffaa;
   text-transform: uppercase;
+  letter-spacing: 2px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 4px;
+  background: rgba(0,255,170,0.1);
+  border: 1px solid rgba(0,255,170,0.15);
+  box-shadow: 0 0 8px rgba(0,255,170,0.1);
 }
 
+/* Mobile */
 @media (max-width: 768px) {
+  .navbar { margin-top: 60px; }
+  .tree-crown { height: 60px; top: -60px; }
+  .crown-branch, .crown-twig { height: 2px; }
+  .cb-main-left-1, .cb-main-right-1 { width: 35%; }
+  .cb-main-left-2, .cb-main-right-2 { width: 25%; }
+  .cb-main-left-3, .cb-main-right-3 { width: 20%; }
+  
   .navbar-container {
     flex-direction: column;
-    gap: 15px;
+    gap: 10px;
+    height: auto;
+    padding: 12px 16px;
   }
-
   .navbar-links {
     flex-wrap: wrap;
     justify-content: center;
+    gap: 2px;
   }
-
-  .navbar-user {
-    align-items: center;
+  .nav-link {
+    padding: 6px 10px;
+    font-size: 13px;
   }
+  .navbar-user { align-items: center; }
 }
-

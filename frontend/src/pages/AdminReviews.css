@@ -1,3 +1,7 @@
+/* ===================================================
+   ADMIN REVIEWS — CYBER-NATURE THEME
+   =================================================== */
+
 .reviews-list {
   display: flex;
   flex-direction: column;
@@ -5,7 +9,17 @@
 }
 
 .review-card {
-  padding: 25px;
+  padding: 28px;
+  background: var(--card-bg);
+  backdrop-filter: blur(12px);
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  transition: all 0.3s;
+}
+
+.review-card:hover {
+  border-color: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
 }
 
 .review-header {
@@ -13,27 +27,30 @@
   justify-content: space-between;
   align-items: flex-start;
   margin-bottom: 20px;
-  padding-bottom: 15px;
-  border-bottom: 2px solid var(--border-color);
+  padding-bottom: 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
 }
 
 .review-header h3 {
   color: var(--text-primary);
   margin-bottom: 5px;
   font-size: 20px;
+  font-weight: 700;
 }
 
 .review-header h4 {
-  color: var(--secondary-color);
-  font-size: 16px;
-  font-weight: normal;
+  color: #00ffaa;
+  font-size: 15px;
+  font-weight: 500;
 }
 
 .review-student {
-  background-color: rgba(52, 152, 219, 0.2);
-  padding: 8px 15px;
-  border-radius: 5px;
-  color: var(--secondary-color);
+  background: rgba(0, 255, 170, 0.06);
+  padding: 8px 16px;
+  border-radius: 10px;
+  color: #00ffaa;
+  border: 1px solid rgba(0, 255, 170, 0.12);
+  font-size: 14px;
 }
 
 .review-details {
@@ -43,6 +60,7 @@
 .review-info {
   margin-bottom: 10px;
   color: var(--text-secondary);
+  font-size: 14px;
 }
 
 .review-info strong {
@@ -50,22 +68,25 @@
 }
 
 .review-info a {
-  color: var(--secondary-color);
+  color: #00ffaa;
   word-break: break-all;
 }
 
 .review-notes-box {
-  background-color: rgba(52, 152, 219, 0.1);
-  padding: 15px;
-  border-radius: 8px;
-  border-left: 3px solid var(--secondary-color);
-  margin-top: 15px;
+  background: rgba(52, 152, 219, 0.05);
+  padding: 16px;
+  border-radius: 12px;
+  border-left: 3px solid rgba(52, 152, 219, 0.4);
+  margin-top: 16px;
 }
 
 .review-notes-box strong {
-  color: var(--secondary-color);
+  color: var(--accent-blue);
   display: block;
   margin-bottom: 10px;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
 .review-notes-box p {
@@ -76,18 +97,19 @@
 }
 
 .modal-info {
-  background-color: rgba(52, 152, 219, 0.1);
-  padding: 15px;
-  border-radius: 8px;
+  background: rgba(0, 255, 170, 0.04);
+  padding: 16px;
+  border-radius: 12px;
   margin-bottom: 20px;
+  border: 1px solid rgba(0, 255, 170, 0.08);
 }
 
 .modal-info p {
   margin: 8px 0;
   color: var(--text-secondary);
+  font-size: 14px;
 }
 
 .modal-info strong {
   color: var(--text-primary);
 }
-

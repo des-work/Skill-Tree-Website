@@ -16,13 +16,26 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Check if user is logged in on mount
     const token = localStorage.getItem('token');
+    let cancelled = false;
+    const safetyTimeout = setTimeout(() => {
+      if (!cancelled) {
+        setLoading(false);
+      }
+    }, 8000);
+
     if (token) {
-      loadUserProfile();
+      loadUserProfile().finally(() => {
+        if (!cancelled) {
+          clearTimeout(safetyTimeout);
+          setLoading(false);
+        }
+      });
     } else {
+      clearTimeout(safetyTimeout);
       setLoading(false);
     }
+    return () => { cancelled = true; clearTimeout(safetyTimeout); };
   }, []);
 
   const loadUserProfile = async () => {
@@ -32,8 +45,6 @@ export const AuthProvider = ({ children }) => {
     } catch (error) {
       console.error('Failed to load user profile:', error);
       localStorage.removeItem('token');
-    } finally {
-      setLoading(false);
     }
   };
 

@@ -5,6 +5,7 @@ import './AdminReviews.css';
 const AdminReviews = () => {
   const [reviews, setReviews] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const [selectedReview, setSelectedReview] = useState(null);
   const [reviewNotes, setReviewNotes] = useState('');
   const [submitting, setSubmitting] = useState(false);
@@ -16,9 +17,17 @@ const AdminReviews = () => {
   const loadPendingReviews = async () => {
     try {
       const response = await api.get('/progress/pending-reviews');
-      setReviews(response.data);
+      // Ensure we always set an array
+      setReviews(Array.isArray(response.data) ? response.data : []);
+      setError(null);
     } catch (err) {
       console.error('Failed to load reviews:', err);
+      setReviews([]); // Set empty array on error
+      if (err.response?.status === 403) {
+        setError('You do not have permission to view reviews. Admin or Instructor access required.');
+      } else {
+        setError('Failed to load reviews. Please try again.');
+      }
     } finally {
       setLoading(false);
     }
@@ -55,6 +64,12 @@ const AdminReviews = () => {
         <h1>Pending Reviews</h1>
         <p>Review student submissions</p>
       </div>
+
+      {error && (
+        <div className="card" style={{ backgroundColor: '#ff4444', color: 'white', marginBottom: '20px' }}>
+          <p>{error}</p>
+        </div>
+      )}
 
       {reviews.length === 0 ? (
         <div className="card">

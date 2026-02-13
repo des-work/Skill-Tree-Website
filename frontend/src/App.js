@@ -19,7 +19,16 @@ const ProtectedRoute = ({ children, requiredRole }) => {
   const { user, loading } = useAuth();
 
   if (loading) {
-    return <div className="loading">Loading...</div>;
+    return (
+      <div className="loading">
+        <div className="loading-spinner"></div>
+        <p>Connecting...</p>
+        <p className="loading-hint">If this persists, ensure the backend is running: <code>npm run dev</code> in the backend folder</p>
+        <button type="button" className="retry-btn" onClick={() => { localStorage.removeItem('token'); window.location.href = '/login'; }}>
+          Clear session & go to login
+        </button>
+      </div>
+    );
   }
 
   if (!user) {
