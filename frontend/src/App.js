@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import './App.css';
 
@@ -13,6 +13,8 @@ import Dashboard from './pages/Dashboard';
 import SkillTreeView from './pages/SkillTreeView';
 import Profile from './pages/Profile';
 import AdminReviews from './pages/AdminReviews';
+import AdminGradebook from './pages/AdminGradebook';
+import AdminUsers from './pages/AdminUsers';
 
 // Protected Route Component
 const ProtectedRoute = ({ children, requiredRole }) => {
@@ -82,8 +84,26 @@ function AppContent() {
         <Route
           path="/admin/reviews"
           element={
-            <ProtectedRoute requiredRole="instructor">
+            <ProtectedRoute requiredRole="admin">
               <AdminReviews />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/admin/gradebook"
+          element={
+            <ProtectedRoute requiredRole="admin">
+              <AdminGradebook />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/admin/users"
+          element={
+            <ProtectedRoute requiredRole="admin">
+              <AdminUsers />
             </ProtectedRoute>
           }
         />

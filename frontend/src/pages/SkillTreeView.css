@@ -235,6 +235,13 @@
   border-radius: 12px;
 }
 
+.file-selected {
+  display: block;
+  margin-top: 8px;
+  color: #00ffaa;
+  font-size: 12px;
+}
+
 @media (max-width: 768px) {
   .skill-nodes {
     grid-template-columns: 1fr;

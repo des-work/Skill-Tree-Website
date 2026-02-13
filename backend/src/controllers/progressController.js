@@ -47,11 +47,11 @@ exports.submitNode = (req, res) => {
   try {
     const { nodeId } = req.params;
     const userId = req.user.userId;
-    const { submissionUrl, submissionNotes } = req.body;
+    const { submissionUrl, submissionNotes, submissionFileUrl, submissionFileName } = req.body;
     
-    if (!submissionUrl && !submissionNotes) {
+    if (!submissionUrl && !submissionNotes && !submissionFileUrl) {
       return res.status(400).json({ 
-        error: 'Either submission URL or notes are required' 
+        error: 'Provide a submission URL, proof file, or notes' 
       });
     }
     
@@ -59,7 +59,9 @@ exports.submitNode = (req, res) => {
       userId, 
       nodeId, 
       submissionUrl, 
-      submissionNotes
+      submissionNotes,
+      submissionFileUrl,
+      submissionFileName
     );
     
     res.json({
@@ -69,6 +71,25 @@ exports.submitNode = (req, res) => {
   } catch (error) {
     console.error('Submit node error:', error);
     res.status(500).json({ error: 'Failed to submit node' });
+  }
+};
+
+exports.uploadProofFile = (req, res) => {
+  try {
+    if (!req.file) {
+      return res.status(400).json({ error: 'No file uploaded' });
+    }
+
+    const publicFileUrl = `/uploads/submissions/${req.file.filename}`;
+    res.json({
+      fileUrl: publicFileUrl,
+      fileName: req.file.originalname,
+      size: req.file.size,
+      mimeType: req.file.mimetype,
+    });
+  } catch (error) {
+    console.error('Upload proof file error:', error);
+    res.status(500).json({ error: 'Failed to upload proof file' });
   }
 };
 

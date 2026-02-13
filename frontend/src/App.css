@@ -87,12 +87,12 @@
 /* Tree Canopy Background - BEHIND hero, rune stones, all content */
 .tree-canopy-bg {
   position: fixed;
-  top: 40px;
+  top: 0px;
   left: 50%;
   transform: translateX(-50%);
-  width: 110%;
-  max-width: 1600px;
-  height: 700px;
+  width: 130%;
+  max-width: 2200px;
+  height: 800px;
   pointer-events: none;
   z-index: 0;
 }
@@ -100,12 +100,22 @@
 .tree-canopy-bg .canopy-svg {
   width: 100%;
   height: 100%;
-  filter: drop-shadow(0 0 30px rgba(0,255,170,0.1));
+  filter:
+    drop-shadow(0 0 18px rgba(0,255,170,0.12))
+    drop-shadow(0 0 36px rgba(120,255,220,0.06));
 }
 
 /* Silhouette outline glow animation */
 .canopy-outline {
-  filter: drop-shadow(0 0 8px rgba(0,255,170,0.15));
+  filter: drop-shadow(0 0 10px rgba(0,255,170,0.13));
+}
+
+.canopy-silhouette-layer {
+  opacity: 0.58;
+}
+
+.canopy-inner-layer {
+  opacity: 0.98;
 }
 
 /* Hero & rune stones - stacking context so tree is clearly behind */

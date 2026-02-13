@@ -10,6 +10,25 @@ const AdminReviews = () => {
   const [reviewNotes, setReviewNotes] = useState('');
   const [submitting, setSubmitting] = useState(false);
 
+  const parseSubmission = (rawSubmissionUrl) => {
+    if (!rawSubmissionUrl) {
+      return { url: '', fileUrl: '', fileName: '' };
+    }
+    try {
+      const parsed = JSON.parse(rawSubmissionUrl);
+      if (parsed && typeof parsed === 'object') {
+        return {
+          url: parsed.url || '',
+          fileUrl: parsed.fileUrl || '',
+          fileName: parsed.fileName || '',
+        };
+      }
+    } catch (_error) {
+      // Backward compatibility with legacy string-only URLs
+    }
+    return { url: rawSubmissionUrl, fileUrl: '', fileName: '' };
+  };
+
   useEffect(() => {
     loadPendingReviews();
   }, []);
@@ -77,8 +96,10 @@ const AdminReviews = () => {
         </div>
       ) : (
         <div className="reviews-list">
-          {reviews.map((review) => (
-            <div key={review.id} className="review-card card">
+          {reviews.map((review) => {
+            const submission = parseSubmission(review.submission_url);
+            return (
+              <div key={review.id} className="review-card card">
               <div className="review-header">
                 <div>
                   <h3>{review.tree_name} - Level {review.node_level}</h3>
@@ -95,15 +116,28 @@ const AdminReviews = () => {
                   {new Date(review.submitted_at).toLocaleString()}
                 </div>
 
-                {review.submission_url && (
+                {submission.url && (
                   <div className="review-info">
                     <strong>Submission URL:</strong>{' '}
                     <a
-                      href={review.submission_url}
+                      href={submission.url}
                       target="_blank"
                       rel="noopener noreferrer"
                     >
-                      {review.submission_url}
+                      {submission.url}
+                    </a>
+                  </div>
+                )}
+
+                {submission.fileUrl && (
+                  <div className="review-info">
+                    <strong>Proof File:</strong>{' '}
+                    <a
+                      href={submission.fileUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      {submission.fileName || 'Open uploaded proof file'}
                     </a>
                   </div>
                 )}
@@ -122,8 +156,9 @@ const AdminReviews = () => {
               >
                 Review Submission
               </button>
-            </div>
-          ))}
+              </div>
+            );
+          })}
         </div>
       )}
 

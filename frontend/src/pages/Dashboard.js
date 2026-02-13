@@ -191,65 +191,129 @@ const Dashboard = () => {
         <div className="tree-canopy-bg">
           <svg viewBox="0 0 1400 800" preserveAspectRatio="xMidYMax meet" className="canopy-svg">
             <defs>
-              <radialGradient id="crownFill" cx="50%" cy="42%" r="52%">
-                <stop offset="0%" stopColor="rgba(0,255,170,0.14)"/>
-                <stop offset="65%" stopColor="rgba(0,255,170,0.05)"/>
-                <stop offset="100%" stopColor="rgba(0,255,170,0.01)"/>
+              <radialGradient id="crownFill" cx="50%" cy="42%" r="62%">
+                <stop offset="0%" stopColor="rgba(0,255,170,0.09)"/>
+                <stop offset="55%" stopColor="rgba(0,255,170,0.035)"/>
+                <stop offset="100%" stopColor="rgba(0,255,170,0)"/>
               </radialGradient>
-              <radialGradient id="crownInner" cx="50%" cy="45%" r="45%">
-                <stop offset="0%" stopColor="rgba(0,255,170,0.12)"/>
+              <radialGradient id="crownInner" cx="50%" cy="48%" r="52%">
+                <stop offset="0%" stopColor="rgba(0,255,170,0.18)"/>
+                <stop offset="100%" stopColor="rgba(0,255,170,0)"/>
+              </radialGradient>
+              <linearGradient id="branchCore" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stopColor="rgba(0,255,170,0.06)"/>
+                <stop offset="50%" stopColor="rgba(120,255,220,0.28)"/>
+                <stop offset="100%" stopColor="rgba(0,255,170,0.06)"/>
+              </linearGradient>
+              <radialGradient id="nodePulse" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stopColor="rgba(180,255,235,0.95)"/>
+                <stop offset="55%" stopColor="rgba(0,255,170,0.55)"/>
                 <stop offset="100%" stopColor="rgba(0,255,170,0)"/>
               </radialGradient>
             </defs>
 
-            {/* Single clean canopy silhouette */}
-            <path
-              className="canopy-outline"
-              d="
-                M700,800
-                C690,745 685,690 685,645
-                C620,610 545,565 475,510
-                C385,440 325,360 285,290
-                C255,235 260,185 295,150
-                C335,110 400,90 470,95
-                C505,50 565,20 635,18
-                C680,16 725,24 760,45
-                C805,20 860,10 915,18
-                C985,28 1045,62 1080,110
-                C1150,112 1210,140 1248,188
-                C1283,232 1290,290 1265,345
-                C1235,410 1180,470 1100,525
-                C1030,573 955,615 885,645
-                C885,690 880,745 870,800
-                Z
-              "
-              fill="url(#crownFill)"
-              stroke="rgba(0,255,170,0.32)"
-              strokeWidth="2.2"
-              strokeLinejoin="round"
-            />
-
-            {/* Soft inner body to avoid multiple canopy edges */}
-            <ellipse cx="700" cy="330" rx="430" ry="255" fill="url(#crownInner)" opacity="0.85" />
-
-            {/* Branch network (reduced and cleaner) */}
-            <g className="canopy-branches">
-              <path d="M700,640 C700,540 700,470 700,400" stroke="rgba(0,255,170,0.18)" strokeWidth="16" fill="none" strokeLinecap="round"/>
-              <path d="M700,500 C645,455 565,410 470,370" stroke="rgba(0,255,170,0.15)" strokeWidth="6" fill="none" strokeLinecap="round"/>
-              <path d="M700,500 C755,455 835,410 930,370" stroke="rgba(0,255,170,0.15)" strokeWidth="6" fill="none" strokeLinecap="round"/>
-              <path d="M700,470 C660,400 615,315 575,235" stroke="rgba(0,255,170,0.12)" strokeWidth="4" fill="none" strokeLinecap="round"/>
-              <path d="M700,470 C740,400 785,315 825,235" stroke="rgba(0,255,170,0.12)" strokeWidth="4" fill="none" strokeLinecap="round"/>
-              <path d="M700,430 C700,330 700,250 700,170" stroke="rgba(0,255,170,0.12)" strokeWidth="4" fill="none" strokeLinecap="round"/>
+            {/* Layer 1: Soft silhouette only (tree form, not a balloon) */}
+            <g className="canopy-silhouette-layer">
+              <path
+                className="canopy-outline"
+                d="
+                  M700,780
+                  C696,738 694,706 692,676
+                  C618,648 536,607 454,552
+                  C370,496 286,432 220,362
+                  C162,302 126,243 124,195
+                  C124,150 152,116 198,104
+                  C175,76 177,46 204,28
+                  C240,7 292,10 336,36
+                  C373,12 425,-2 486,8
+                  C550,18 604,8 660,2
+                  C674,1 687,0 700,0
+                  C713,0 726,1 740,2
+                  C796,8 850,18 914,8
+                  C975,-2 1027,12 1064,36
+                  C1108,10 1160,7 1196,28
+                  C1223,46 1225,76 1202,104
+                  C1248,116 1276,150 1276,195
+                  C1274,243 1238,302 1180,362
+                  C1114,432 1030,496 946,552
+                  C864,607 782,648 708,676
+                  C706,706 704,738 700,780
+                  Z
+                "
+                fill="url(#crownFill)"
+                stroke="rgba(0,255,170,0.24)"
+                strokeWidth="1.6"
+                strokeLinejoin="round"
+              />
             </g>
 
-            {/* Minimal foliage clusters for detail without clutter */}
-            {[
-              [520,250,70,55],[620,200,65,50],[700,175,70,52],[780,200,65,50],[880,250,70,55],
-              [450,320,75,60],[570,300,72,58],[700,290,78,60],[830,300,72,58],[950,320,75,60],
-              [520,395,70,55],[700,395,75,58],[880,395,70,55]
-            ].map(([cx, cy, rx, ry], i) => (
-              <ellipse key={i} cx={cx} cy={cy} rx={rx} ry={ry} fill="url(#crownInner)" opacity="0.62" />
-            ))}
+            {/* Layer 2: Branch architecture + lumens */}
+            <g className="canopy-inner-layer">
+              <ellipse cx="700" cy="295" rx="500" ry="235" fill="url(#crownInner)" opacity="0.42" />
+              <g className="canopy-branches">
+                {/* Trunk and primary scaffold */}
+                <path d="M700,675 C700,615 700,542 700,452" stroke="url(#branchCore)" strokeWidth="15" fill="none" strokeLinecap="round"/>
+                <path d="M700,545 C610,500 490,438 355,366" stroke="url(#branchCore)" strokeWidth="8" fill="none" strokeLinecap="round"/>
+                <path d="M700,545 C790,500 910,438 1045,366" stroke="url(#branchCore)" strokeWidth="8" fill="none" strokeLinecap="round"/>
+                <path d="M700,470 C630,398 530,302 420,204" stroke="url(#branchCore)" strokeWidth="5.5" fill="none" strokeLinecap="round"/>
+                <path d="M700,470 C770,398 870,302 980,204" stroke="url(#branchCore)" strokeWidth="5.5" fill="none" strokeLinecap="round"/>
+                <path d="M700,435 C700,346 700,242 700,130" stroke="url(#branchCore)" strokeWidth="4.5" fill="none" strokeLinecap="round"/>
+
+                {/* Secondary boughs */}
+                <path d="M355,366 C286,332 218,286 166,234" stroke="rgba(120,255,220,0.22)" strokeWidth="3.5" fill="none" strokeLinecap="round"/>
+                <path d="M355,366 C300,382 236,406 174,432" stroke="rgba(120,255,220,0.18)" strokeWidth="3.2" fill="none" strokeLinecap="round"/>
+                <path d="M420,204 C340,166 260,124 205,86" stroke="rgba(120,255,220,0.18)" strokeWidth="3" fill="none" strokeLinecap="round"/>
+                <path d="M980,204 C1060,166 1140,124 1195,86" stroke="rgba(120,255,220,0.18)" strokeWidth="3" fill="none" strokeLinecap="round"/>
+                <path d="M1045,366 C1114,332 1182,286 1234,234" stroke="rgba(120,255,220,0.22)" strokeWidth="3.5" fill="none" strokeLinecap="round"/>
+                <path d="M1045,366 C1100,382 1164,406 1226,432" stroke="rgba(120,255,220,0.18)" strokeWidth="3.2" fill="none" strokeLinecap="round"/>
+
+                {/* Filament branches for organic-circuit feel */}
+                <path d="M560,388 C498,352 434,322 372,295" stroke="rgba(180,255,235,0.15)" strokeWidth="1.7" fill="none"/>
+                <path d="M560,388 C505,418 450,442 398,468" stroke="rgba(180,255,235,0.13)" strokeWidth="1.6" fill="none"/>
+                <path d="M630,304 C575,262 522,226 468,190" stroke="rgba(180,255,235,0.14)" strokeWidth="1.7" fill="none"/>
+                <path d="M770,304 C825,262 878,226 932,190" stroke="rgba(180,255,235,0.14)" strokeWidth="1.7" fill="none"/>
+                <path d="M840,388 C902,352 966,322 1028,295" stroke="rgba(180,255,235,0.15)" strokeWidth="1.7" fill="none"/>
+                <path d="M840,388 C895,418 950,442 1002,468" stroke="rgba(180,255,235,0.13)" strokeWidth="1.6" fill="none"/>
+                <path d="M480,254 C430,228 380,198 338,170" stroke="rgba(180,255,235,0.12)" strokeWidth="1.4" fill="none"/>
+                <path d="M920,254 C970,228 1020,198 1062,170" stroke="rgba(180,255,235,0.12)" strokeWidth="1.4" fill="none"/>
+                <path d="M700,212 C650,182 602,156 560,132" stroke="rgba(180,255,235,0.12)" strokeWidth="1.5" fill="none"/>
+                <path d="M700,212 C750,182 798,156 840,132" stroke="rgba(180,255,235,0.12)" strokeWidth="1.5" fill="none"/>
+              </g>
+
+              {/* Foliage volume pockets (subtle, branch-led silhouette) */}
+              {[
+                [210,112,78,52],[332,84,74,50],[468,62,76,50],[620,52,78,52],[780,52,78,52],[932,62,76,50],[1068,84,74,50],[1190,112,78,52],
+                [176,188,72,48],[300,166,70,46],[432,146,72,48],[570,132,74,50],[700,124,80,52],[830,132,74,50],[968,146,72,48],[1100,166,70,46],[1224,188,72,48],
+                [160,274,68,45],[286,252,68,45],[426,236,70,46],[568,224,72,48],[700,216,74,50],[832,224,72,48],[974,236,70,46],[1114,252,68,45],[1240,274,68,45],
+                [194,352,64,42],[326,334,64,42],[468,318,66,44],[618,306,68,45],[782,306,68,45],[932,318,66,44],[1074,334,64,42],[1206,352,64,42],
+                [248,426,60,40],[390,408,62,41],[548,394,64,42],[700,386,66,44],[852,394,64,42],[1010,408,62,41],[1152,426,60,40],
+              ].map(([cx, cy, rx, ry], i) => (
+                <ellipse key={i} cx={cx} cy={cy} rx={rx} ry={ry} fill="url(#crownInner)" opacity={0.18 + (i % 4) * 0.05} />
+              ))}
+
+              {/* Junction nodes / bio-electric bulbs */}
+              {[
+                [700,454,7],[700,382,6],[620,432,5.5],[780,432,5.5],[560,390,4.8],[840,390,4.8],[496,350,4.2],[904,350,4.2],
+                [432,306,4],[968,306,4],[372,270,3.6],[1028,270,3.6],[300,224,3.4],[1100,224,3.4],[246,180,3.2],[1154,180,3.2],
+                [700,286,4.5],[640,256,3.8],[760,256,3.8],[700,212,3.6],[560,172,3.1],[840,172,3.1],
+              ].map(([x, y, r], i) => (
+                <circle key={`n${i}`} cx={x} cy={y} r={r} fill="url(#nodePulse)" opacity="0.85">
+                  <animate attributeName="opacity" values="0.35;0.95;0.35" dur={`${2.2 + (i % 5) * 0.45}s`} begin={`${(i % 7) * 0.2}s`} repeatCount="indefinite" />
+                </circle>
+              ))}
+
+              {/* Ambient spark dust */}
+              {[
+                [126,134],[220,92],[308,70],[398,54],[510,38],[620,28],[780,28],[890,38],[1002,54],[1092,70],[1180,92],[1274,134],
+                [148,230],[246,206],[342,182],[456,166],[582,154],[818,154],[944,166],[1058,182],[1154,206],[1252,230],
+                [182,320],[286,296],[394,278],[510,266],[638,258],[762,258],[890,266],[1006,278],[1114,296],[1218,320],
+                [248,404],[362,384],[486,370],[614,362],[786,362],[914,370],[1038,384],[1152,404],
+              ].map(([x,y],i) => (
+                <circle key={`s${i}`} cx={x} cy={y} r={i % 6 === 0 ? 2.3 : 1.4} fill="#8fffe0" opacity="0.34">
+                  <animate attributeName="opacity" values="0.08;0.45;0.08" dur={`${3.2 + (i % 4) * 0.7}s`} begin={`${i * 0.18}s`} repeatCount="indefinite"/>
+                </circle>
+              ))}
+            </g>
           </svg>
         </div>
       )}

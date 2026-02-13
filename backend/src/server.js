@@ -58,6 +58,7 @@ app.use('/api', apiLimiter); // Apply general limiter to all API routes
 app.use('/api/auth', require('./routes/auth'));
 app.use('/api/skill-trees', require('./routes/skillTrees'));
 app.use('/api/progress', require('./routes/progress'));
+app.use('/api/admin', require('./routes/admin'));
 
 // Health check
 app.get('/api/health', (req, res) => {

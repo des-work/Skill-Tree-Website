@@ -12,6 +12,7 @@ const SkillTreeView = () => {
   const [selectedNode, setSelectedNode] = useState(null);
   const [submissionUrl, setSubmissionUrl] = useState('');
   const [submissionNotes, setSubmissionNotes] = useState('');
+  const [proofFile, setProofFile] = useState(null);
   const [submitting, setSubmitting] = useState(false);
 
   useEffect(() => {
@@ -86,13 +87,29 @@ const SkillTreeView = () => {
 
     setSubmitting(true);
     try {
+      let uploadedFileUrl = '';
+      let uploadedFileName = '';
+
+      if (proofFile) {
+        const formData = new FormData();
+        formData.append('proofFile', proofFile);
+        const uploadResponse = await api.post('/progress/upload-proof', formData, {
+          headers: { 'Content-Type': 'multipart/form-data' },
+        });
+        uploadedFileUrl = uploadResponse.data?.fileUrl || '';
+        uploadedFileName = uploadResponse.data?.fileName || proofFile.name;
+      }
+
       await api.post(`/progress/nodes/${selectedNode.id}/submit`, {
         submissionUrl,
         submissionNotes,
+        submissionFileUrl: uploadedFileUrl,
+        submissionFileName: uploadedFileName,
       });
       setSelectedNode(null);
       setSubmissionUrl('');
       setSubmissionNotes('');
+      setProofFile(null);
       loadSkillTree();
     } catch (err) {
       console.error('Failed to submit:', err);
@@ -205,7 +222,7 @@ const SkillTreeView = () => {
 
       {/* Submission Modal */}
       {selectedNode && (
-        <div className="modal-overlay" onClick={() => setSelectedNode(null)}>
+        <div className="modal-overlay" onClick={() => { setSelectedNode(null); setProofFile(null); }}>
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
             <h2>Submit: {selectedNode.title}</h2>
             <form onSubmit={handleSubmit}>
@@ -218,6 +235,19 @@ const SkillTreeView = () => {
                   onChange={(e) => setSubmissionUrl(e.target.value)}
                   placeholder="https://..."
                 />
+              </div>
+
+              <div className="form-group">
+                <label htmlFor="proofFile">Proof File (Optional)</label>
+                <input
+                  type="file"
+                  id="proofFile"
+                  accept=".png,.jpg,.jpeg,.gif,.webp,.pdf,.txt,.doc,.docx,.zip"
+                  onChange={(e) => setProofFile(e.target.files?.[0] || null)}
+                />
+                {proofFile && (
+                  <small className="file-selected">Selected: {proofFile.name}</small>
+                )}
               </div>
 
               <div className="form-group">
@@ -235,7 +265,7 @@ const SkillTreeView = () => {
               <div className="modal-actions">
                 <button
                   type="button"
-                  onClick={() => setSelectedNode(null)}
+                  onClick={() => { setSelectedNode(null); setProofFile(null); }}
                   className="btn btn-danger"
                 >
                   Cancel

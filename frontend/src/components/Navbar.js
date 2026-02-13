@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { FaUser, FaSignOutAlt, FaTasks, FaThLarge, FaTree } from 'react-icons/fa';
+import { FaUser, FaSignOutAlt, FaTasks, FaThLarge, FaTree, FaTable, FaUsers } from 'react-icons/fa';
 import './Navbar.css';
 
 const Navbar = () => {
@@ -52,10 +52,18 @@ const Navbar = () => {
             <FaThLarge /> Dashboard
           </Link>
 
-          {(user?.role === 'instructor' || user?.role === 'admin') && (
-            <Link to="/admin/reviews" className="nav-link">
-              <FaTasks /> Reviews
-            </Link>
+          {user?.role === 'admin' && (
+            <>
+              <Link to="/admin/reviews" className="nav-link">
+                <FaTasks /> Reviews
+              </Link>
+              <Link to="/admin/gradebook" className="nav-link">
+                <FaTable /> Gradebook
+              </Link>
+              <Link to="/admin/users" className="nav-link">
+                <FaUsers /> Users
+              </Link>
+            </>
           )}
 
           <Link to="/profile" className="nav-link">
